@@ -1,7 +1,7 @@
 import { Output, streamText } from "ai";
 import { z } from "zod";
 
-import { createLovableAiGatewayProvider } from "./ai-gateway.server";
+import { createUmmahAiGatewayProvider } from "./ai-gateway.server";
 import type { SheikhAnswer } from "./answer";
 
 const AnswerSchema = z.object({
@@ -35,14 +35,15 @@ export async function generateAnswer(
   category: string,
   language = "English",
 ): Promise<SheikhAnswer> {
-  const key = process.env["LOVABLE_API_KEY"];
+  const key = process.env["UMMAH_API_KEY"] ?? process.env["OPENAI_API_KEY"] ?? process.env["LOVABLE_API_KEY"];
   if (!key) throw new Error("AI is not configured yet. Please try again later.");
 
-  const gateway = createLovableAiGatewayProvider(key);
+  const gateway = createUmmahAiGatewayProvider(key, process.env["UMMAH_BASE_URL"]);
+  const modelName = process.env["UMMAH_MODEL"] ?? "gpt-4o-mini";
 
   try {
     const result = streamText({
-      model: gateway("google/gemini-3.5-flash"),
+      model: gateway(modelName),
       output: Output.object({ schema: AnswerSchema }),
       system: SYSTEM,
       prompt: `Category: ${category}\n\nQuestion: ${question}\n\nWrite the entire answer (summary, headings, section bodies, translations of the evidences, practical steps and closing) in ${language}. Keep Qur'an and hadith source names in their usual form, and keep the "arabic" field in Arabic script. If the language is Hausa or Twi, use natural, respectful everyday ${language} that an ordinary believer understands.\n\nGive a concise summary, a vivid step-by-step breakdown (3-6 sections), cited Qur'anic verses and authentic hadith where applicable, practical action points, and a short closing du'a or encouragement.`,
@@ -53,6 +54,8 @@ export async function generateAnswer(
     if (message.includes("429")) throw new Error("Too many questions right now — please try again in a moment.");
     if (message.includes("402"))
       throw new Error("The AI allowance for this app is used up. Please add credits to continue.");
+    if (message.includes("401") || message.includes("403"))
+      throw new Error("The AI key is invalid or the provider rejected the request. Please check the configured key and endpoint.");
     throw new Error("The answer could not be generated. Please rephrase and try again.");
   }
 }

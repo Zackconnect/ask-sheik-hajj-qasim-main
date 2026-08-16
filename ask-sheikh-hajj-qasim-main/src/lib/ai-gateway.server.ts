@@ -1,10 +1,12 @@
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
-export function createLovableAiGatewayProvider(apiKey: string) {
+export function createUmmahAiGatewayProvider(apiKey: string, baseURL?: string) {
   return createOpenAICompatible({
-    name: "lovable-ai-gateway",
-    baseURL: "https://ai.gateway.lovable.dev/v1",
-    headers: { "Lovable-API-Key": apiKey },
+    name: "ummah-ai-gateway",
+    baseURL: baseURL ?? process.env["UMMAH_BASE_URL"] ?? "https://api.ummahapi.com/v1",
+    headers: {
+      "X-API-Key": apiKey,
+    },
     supportsStructuredOutputs: true,
   });
 }
