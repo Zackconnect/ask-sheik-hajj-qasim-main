@@ -1,0 +1,6 @@
+{
+  "buildCommand": "bun install && bun run build",
+  "outputDirectory": ".output/public",
+  "framework": "vite",
+  "nodeVersion": "22.x"
+}
