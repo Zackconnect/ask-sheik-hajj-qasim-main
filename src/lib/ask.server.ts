@@ -59,6 +59,7 @@ export async function generateAnswer(
   if (openaiKey) {
     try {
       console.log("[Ask Sheikh] Attempting OpenAI API (preferred)...");
+      console.log(`[Ask Sheikh] Key length: ${openaiKey.length}, starts with: ${openaiKey.substring(0, 20)}...`);
       const openaiProvider = createOpenAIProvider(openaiKey);
       const result = streamText({
         model: openaiProvider("gpt-4o-mini"),
