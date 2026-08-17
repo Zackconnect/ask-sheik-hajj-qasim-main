@@ -35,7 +35,9 @@ function createOpenAIProvider(apiKey: string) {
   return createOpenAICompatible({
     name: "openai",
     baseURL: "https://api.openai.com/v1",
-    apiKey: apiKey,
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
   });
 }
 
