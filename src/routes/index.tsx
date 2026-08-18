@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 
 import heroImage from "@/assets/hero-mosque.jpg";
-import { AskPanel } from "@/components/ask-panel";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -178,13 +177,6 @@ function Index() {
         </div>
       </section>
 
-      <section className="ornament-bg border-y border-primary-deep px-4 py-16 text-center text-primary-foreground sm:py-20">
-        <h2 className="font-display text-3xl sm:text-4xl">Ask Your Islamic Question</h2>
-        <p className="mt-3 text-sm text-primary-foreground/80">Your digital companion for authentic Islamic knowledge.</p>
-        <div className="mx-auto mt-9 max-w-3xl text-left">
-          <AskPanel />
-        </div>
-      </section>
     </>
   );
 }
