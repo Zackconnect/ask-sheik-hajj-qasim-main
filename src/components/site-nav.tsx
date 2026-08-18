@@ -21,11 +21,11 @@ export function SiteNav() {
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background">
       <div className="mx-auto flex max-w-7xl items-center gap-5 px-4 py-3 sm:px-8">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="grid size-10 place-items-center rounded-full border border-gold bg-primary font-display text-lg text-primary-foreground shadow-sm">
-            ق
+          <span className="grid size-10 place-items-center rounded-full border border-gold bg-primary text-gold shadow-sm">
+            <Flower2 className="size-6" strokeWidth={1.8} aria-hidden="true" />
           </span>
           <span className="leading-tight">
-            <span className="block font-display text-base text-foreground sm:text-lg">Ask Hajj Kassim</span>
+            <span className="block font-display text-base text-foreground sm:text-lg">Ask Sheikh Hajj Qasim</span>
           </span>
         </Link>
 
