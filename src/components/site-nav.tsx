@@ -1,14 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Headphones, LayoutDashboard, Menu, MessageCircleQuestion, X } from "lucide-react";
+import { BookOpen, Flower2, Headphones, LayoutDashboard, Menu, MessageCircleQuestion, X } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
 const LINKS = [
-  { to: "/quran", label: "Quran", icon: BookOpen },
-  { to: "/ask", label: "Q&A", icon: MessageCircleQuestion },
-  { to: "/audio", label: "Audio", icon: Headphones },
+  { to: "/", label: "Home", icon: Flower2 },
+  { to: "/ask", label: "Ask a Question", icon: MessageCircleQuestion },
+  { to: "/quran", label: "Qur'an", icon: BookOpen },
+  { to: "/audio", label: "Hadith", icon: Headphones },
+  { to: "/quran", label: "Duas", icon: Flower2 },
 ] as const;
 
 export function SiteNav() {
@@ -16,54 +18,51 @@ export function SiteNav() {
   const { user, signOut } = useAuth();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background">
+      <div className="mx-auto flex max-w-7xl items-center gap-5 px-4 py-3 sm:px-8">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="grid size-10 place-items-center rounded-full border border-gold bg-primary font-display text-lg text-primary-foreground">
+          <span className="grid size-10 place-items-center rounded-full border border-gold bg-primary font-display text-lg text-primary-foreground shadow-sm">
             ق
           </span>
           <span className="leading-tight">
-            <span className="block font-display text-base text-primary sm:text-lg">Ask Sheikh Hajj Qasim</span>
-            <span className="block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-              Quran · Q&amp;A · Recitation
-            </span>
+            <span className="block font-display text-base text-foreground sm:text-lg">Ask Hajj Kassim</span>
           </span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-1 md:flex">
+        <nav className="ml-auto hidden items-center gap-1 lg:flex">
           {LINKS.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-primary"
-              activeProps={{ className: "bg-secondary text-primary" }}
+              className="rounded-full px-3.5 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-primary"
+              activeProps={{ className: "rounded-full bg-secondary px-3.5 py-2 text-primary" }}
             >
               {link.label}
             </Link>
           ))}
+          <div className="ml-3 flex items-center gap-4 text-xs font-medium">
+            <button type="button" className="rounded-full bg-primary px-3 py-1.5 text-primary-foreground">English</button>
+            <button type="button" className="text-foreground/60 hover:text-primary">العربية</button>
+            <button type="button" className="text-foreground/60 hover:text-primary">Hausa</button>
+            <button type="button" className="text-foreground/60 hover:text-primary">Twi</button>
+          </div>
           {user ? (
             <>
-              <Link
-                to="/dashboard"
-                className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-primary"
-                activeProps={{ className: "bg-secondary text-primary" }}
-              >
-                Dashboard
-              </Link>
-              <Button variant="outline" size="sm" className="ml-2" onClick={() => void signOut()}>
+              <Button variant="ghost" size="sm" className="ml-2" onClick={() => void signOut()}>
                 Sign out
               </Button>
             </>
           ) : (
-            <Button asChild size="sm" className="ml-2">
-              <Link to="/auth">Login / Signup</Link>
-            </Button>
+            <Link to="/auth" className="ml-2 text-sm font-medium text-foreground/70 hover:text-primary">Sign in</Link>
           )}
+          <Button asChild size="sm" className="ml-2 rounded-xl px-4">
+            <Link to="/ask">Ask a Question</Link>
+          </Button>
         </nav>
 
         <button
           type="button"
-          className="ml-auto grid size-10 place-items-center rounded-md border border-border md:hidden"
+          className="ml-auto grid size-10 place-items-center rounded-md border border-border lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((prev) => !prev)}
         >
@@ -72,7 +71,7 @@ export function SiteNav() {
       </div>
 
       {open ? (
-        <nav className="border-t border-border bg-card px-4 py-3 md:hidden">
+        <nav className="border-t border-border bg-card px-4 py-3 lg:hidden">
           <ul className="flex flex-col gap-1">
             {LINKS.map((link) => (
               <li key={link.to}>
