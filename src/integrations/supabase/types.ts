@@ -46,42 +46,72 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          role: string
         }
         Insert: {
           created_at?: string
           display_name?: string | null
           id: string
+          role?: string
         }
         Update: {
           created_at?: string
           display_name?: string | null
           id?: string
+          role?: string
         }
         Relationships: []
       }
       questions: {
         Row: {
-          answer: string
+          answer: string | null
+          answered_at: string | null
+          answered_by: string | null
+          audio_answer_path: string | null
+          audio_question_path: string | null
           category: string
+          city: string | null
           created_at: string
+          country: string | null
+          display_name: string | null
           id: string
+          language: string
           question: string
+          status: string
           user_id: string
         }
         Insert: {
-          answer: string
+          answer?: string | null
+          answered_at?: string | null
+          answered_by?: string | null
+          audio_answer_path?: string | null
+          audio_question_path?: string | null
           category: string
+          city?: string | null
           created_at?: string
+          country?: string | null
+          display_name?: string | null
           id?: string
+          language?: string
           question: string
+          status?: string
           user_id: string
         }
         Update: {
-          answer?: string
+          answer?: string | null
+          answered_at?: string | null
+          answered_by?: string | null
+          audio_answer_path?: string | null
+          audio_question_path?: string | null
           category?: string
+          city?: string | null
           created_at?: string
+          country?: string | null
+          display_name?: string | null
           id?: string
+          language?: string
           question?: string
+          status?: string
           user_id?: string
         }
         Relationships: []

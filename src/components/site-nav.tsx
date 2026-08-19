@@ -48,6 +48,9 @@ export function SiteNav() {
           </div>
           {user ? (
             <>
+              <Link to="/admin" className="ml-2 text-sm font-medium text-foreground/70 hover:text-primary">
+                Admin
+              </Link>
               <Button variant="ghost" size="sm" className="ml-2" onClick={() => void signOut()}>
                 Sign out
               </Button>

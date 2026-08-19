@@ -98,3 +98,17 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Manual question review
+
+AI question answering is disabled. Signed-in users submit questions to a pending queue, and authorised admins answer them from `/admin`.
+
+After applying the Supabase migrations, promote an account manually from the Supabase SQL editor:
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = 'YOUR_AUTH_USER_UUID';
+```
+
+The question form accepts only optional display name, country, and city. Government identity documents and precise location are intentionally not collected.

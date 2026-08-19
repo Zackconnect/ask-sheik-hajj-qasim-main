@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { QuestionAudio } from "@/components/question-audio";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import type { SheikhAnswer } from "@/lib/answer";
@@ -25,7 +26,8 @@ export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
 });
 
-function parseAnswer(raw: string): SheikhAnswer | null {
+function parseAnswer(raw: string | null): SheikhAnswer | null {
+  if (!raw) return null;
   try {
     return JSON.parse(raw) as SheikhAnswer;
   } catch {
@@ -48,7 +50,7 @@ function DashboardPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("questions")
-        .select("id, category, question, answer, created_at")
+        .select("id, category, question, answer, audio_answer_path, created_at")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -154,8 +156,9 @@ function DashboardPage() {
                   </div>
                   <p className="mt-3 font-display text-lg text-primary">{item.question}</p>
                   <p className="mt-2 text-sm leading-relaxed text-foreground/80">
-                    {parsed?.summary ?? item.answer.slice(0, 400)}
+                    {parsed?.summary ?? (item.answer ? item.answer.slice(0, 400) : "Pending review by Sheikh Hajj Qasim.")}
                   </p>
+                  <QuestionAudio path={item.audio_answer_path} label="Voice reply from Sheikh Hajj Qasim" />
                   {parsed?.detail?.length ? (
                     <details className="mt-3">
                       <summary className="cursor-pointer text-sm text-primary">Read the full answer</summary>
