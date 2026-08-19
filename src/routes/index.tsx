@@ -71,7 +71,7 @@ function Index() {
               Have an Islamic Question?
             </h1>
             <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-primary-foreground/85 sm:text-xl">
-              Ask Hajj Kassim helps you explore Islamic knowledge from the Qur&apos;an, authentic Sunnah, and trusted
+              Sheikh Hajj Qasim helps you explore Islamic knowledge from the Qur&apos;an, authentic Sunnah, and trusted
               scholarly sources.
             </p>
             <form className="mx-auto mt-9 flex max-w-3xl flex-col gap-3 sm:flex-row" onSubmit={(event) => event.preventDefault()}>
@@ -82,7 +82,7 @@ function Index() {
               />
               <Button asChild size="lg" className="h-14 rounded-2xl bg-gold px-8 text-foreground shadow-none hover:bg-gold-soft">
                 <Link to="/ask">
-                  Ask Hajj Kassim <ArrowRight className="size-4" />
+                  Ask Sheikh Hajj Qasim <ArrowRight className="size-4" />
                 </Link>
               </Button>
             </form>
@@ -166,7 +166,7 @@ function Index() {
           {[
             { icon: BookOpen, title: "Trusted Sources", body: "Answers reference recognised books of Qur'an and Sunnah." },
             { icon: ShieldCheck, title: "Ask a Scholar", body: "Some questions need a human. Submit your question for review by a qualified scholar." },
-            { icon: Sparkles, title: "How Ask Hajj Kassim Works", body: "Your digital companion for authentic Islamic knowledge." },
+            { icon: Sparkles, title: "How Ask Sheikh Hajj Qasim Works", body: "Your digital companion for authentic Islamic knowledge." },
           ].map((feature) => (
             <article key={feature.title} className="card-elevated min-h-44 p-6">
               <feature.icon className="size-7 text-primary" strokeWidth={1.8} />
