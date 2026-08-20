@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { BookOpen, Flower2, Headphones, LayoutDashboard, Menu, MessageCircleQuestion, X } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -16,18 +16,37 @@ const LINKS = [
 export function SiteNav() {
   const [open, setOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const logoClicks = useRef(0);
+  const logoClickTimer = useRef<number | undefined>(undefined);
+
+  const handleLogoClick = () => {
+    logoClicks.current += 1;
+    window.clearTimeout(logoClickTimer.current);
+    logoClickTimer.current = window.setTimeout(() => {
+      logoClicks.current = 0;
+    }, 700);
+
+    if (logoClicks.current === 3) {
+      logoClicks.current = 0;
+      void navigate({ to: "/admin" });
+      return;
+    }
+
+    void navigate({ to: "/" });
+  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background">
       <div className="mx-auto flex max-w-7xl items-center gap-5 px-4 py-3 sm:px-8">
-        <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+        <button type="button" className="flex items-center gap-3 text-left" onClick={() => { setOpen(false); handleLogoClick(); }} aria-label="Go home">
           <span className="grid size-10 place-items-center rounded-full border border-gold bg-primary text-gold shadow-sm">
             <Flower2 className="size-6" strokeWidth={1.8} aria-hidden="true" />
           </span>
           <span className="leading-tight">
             <span className="block font-display text-base text-foreground sm:text-lg">Ask Sheikh Hajj Qasim</span>
           </span>
-        </Link>
+        </button>
 
         <nav className="ml-auto hidden items-center gap-1 lg:flex">
           {LINKS.map((link) => (
